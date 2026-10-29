@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="RivalScope AI-এর বাংলা ব্যবহার, ব্যবসা ও পরিচালনা নির্দেশিকা"><title>অ্যাডমিন ও পরিচালনা — RivalScope AI</title><style>
+@font-face{font-family:ManualBengali;src:url(images/NotoSansBengali.ttf) format("truetype");font-weight:100 900;font-display:swap}:root{color-scheme:light;--ink:#203d36;--teal:#137d70;--line:#dbe7e1}
+*{box-sizing:border-box}body{margin:0;background:#f3f7f4;color:#243c34;font-family:ManualBengali,"Nirmala UI","Noto Sans Bengali","Vrinda",system-ui,sans-serif;font-size:16px;line-height:1.95}
+.top{background:#113b30;color:#e6f4e9;padding:30px max(22px,calc((100% - 1080px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}.top strong{font-size:25px}.top small{display:block;color:#adcfba;font-size:14px}.top button{border:1px solid #75ad92;border-radius:7px;color:white;background:transparent;padding:9px 17px;font:inherit;cursor:pointer}
+nav{max-width:1080px;margin:20px auto;display:flex;gap:10px;flex-wrap:wrap;padding:0 24px}nav a{border:1px solid var(--line);background:white;border-radius:6px;padding:7px 13px;font-size:14px;color:var(--teal);text-decoration:none}
+main{max-width:1080px;margin:20px auto 50px;padding:38px 44px;background:white;border:1px solid var(--line);border-radius:11px}h1,h2,h3{color:var(--ink);line-height:1.5}h1{font-size:31px;margin-top:0;border-bottom:2px solid #c7e2d4;padding-bottom:20px}h2{font-size:24px;margin-top:40px}h3{font-size:19px;margin-top:27px}p,li{overflow-wrap:anywhere}a{color:var(--teal);text-underline-offset:3px}img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;margin:24px auto}table{border-collapse:collapse;width:100%;font-size:14px;margin:20px 0;display:block;overflow-x:auto}th,td{padding:12px 14px;border:1px solid var(--line);vertical-align:top;text-align:left;min-width:100px}th{background:#edf5ef}tbody tr:nth-child(even){background:#fafcfb}blockquote{border-left:4px solid #8ebca3;background:#f2f8f4;padding:10px 22px;margin:22px 0}pre{padding:20px;background:#142f28;color:#e3f1e8;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px}code{font-family:Consolas,monospace;font-size:1em}p code,td code,li code{background:#edf4ef;padding:2px 5px;border-radius:3px}.manual-part{margin-top:60px;padding-top:35px;border-top:3px solid #a5cdb6}.footer{color:#7b9081;text-align:center;font-size:14px;margin:20px}.toc{background:#eff6f1;border-radius:8px;padding:18px 24px;margin:25px 0}.toc strong{display:block;margin-bottom:8px}.toc a{display:block;font-size:14px;padding:3px 0}
+@media(max-width:650px){main{padding:25px 19px;margin:14px 12px;border-radius:8px}.top{padding:20px}.top strong{font-size:20px}.top button{font-size:14px;white-space:nowrap}nav{padding:0 12px;gap:7px}nav a{font-size:14px}h1{font-size:26px}h2{font-size:21px}body{font-size:15px}}
+@media print{body{background:white;font-size:11pt;line-height:1.65}.top,nav,.footer,.toc{display:none}main{max-width:none;margin:0;padding:0;border:0;box-shadow:none}h1{font-size:22pt}h2{font-size:16pt;break-after:avoid}h3{break-after:avoid}pre{background:#f4f4f4;color:black;white-space:pre-wrap;word-break:break-word}table{display:table;font-size:10.5pt}th,td{min-width:0;padding:7px}img{max-height:230mm;object-fit:contain}tr,blockquote{break-inside:avoid}.manual-part{break-before:page;border:0;margin:0;padding:0}a{color:inherit}@page{size:A4;margin:18mm}}
+</style></head><body><header class="top"><div><strong>RivalScope AI</strong><small>বাংলা ব্যবহার ও পরিচালনা নির্দেশিকা · ২৯ অক্টোবর ২০২৬</small></div><button onclick="window.print()">প্রিন্ট / PDF</button></header><nav aria-label="নির্দেশিকা নির্বাচন"><a href="index.html">নির্দেশিকার সূচি</a><a href="USER_MANUAL.html">সাধারণ ব্যবহারকারী</a><a href="BUSINESS_OWNER_MANUAL.html">ব্যবসার মালিক</a><a href="ADMIN_MANUAL.html">অ্যাডমিন ও পরিচালনা</a><a href="RIVALSCOPE_MANUAL_BN.html">সম্পূর্ণ নির্দেশিকা</a></nav><main><h1 id="admin_manual-section-1">অ্যাডমিন ও পরিচালনা নির্দেশিকা</h1><div class="toc"><strong>এই নির্দেশিকায়</strong><a href="#admin_manual-section-2">১. আগে আপনার দায়িত্ব বুঝুন</a><a href="#admin_manual-section-3">২. Platform administrator হিসেবে প্রবেশ</a><a href="#admin_manual-section-4">৩. Admin API-তে কী আছে</a><a href="#admin_manual-section-6">৪. Credit adjustment</a><a href="#admin_manual-section-7">৫. Plan পরিবর্তন ও Stripe mapping</a><a href="#admin_manual-section-8">৬. Provider ও external service setup</a><a href="#admin_manual-section-9">৭. Billing সমস্যা সামলানো</a><a href="#admin_manual-section-10">৮. Local service চালু ও অবস্থা দেখা</a><a href="#admin_manual-section-11">৯. Research বা email আটকে গেলে</a><a href="#admin_manual-section-12">১০. Customer API key ও webhook সহায়তা</a><a href="#admin_manual-section-13">১১. দৈনন্দিন দায়িত্বের তালিকা</a><a href="#admin_manual-section-14">১২. Production চালুর আগে অবশিষ্ট gate</a></div>
+<p><strong>RivalScope AI · বাংলা · ২৯ অক্টোবর ২০২৬</strong></p>
+<p>এই নির্দেশিকা workspace admin, platform administrator এবং deployment operator-এর দায়িত্ব আলাদা করে দেখায়। এটি বর্তমান implementation-এর manual; production readiness-এর সনদ নয়। এখানে থাকা পরিবর্তনের উদাহরণগুলো নির্দেশনা মাত্র—manual তৈরির সময় কোনো role, plan, credit বা live payment বদলানো হয়নি।</p>
+<h2 id="admin_manual-section-2">১. আগে আপনার দায়িত্ব বুঝুন</h2>
+<table>
+<thead>
+<tr>
+<th>দায়িত্ব</th>
+<th>অনুমতি</th>
+<th>কোথা থেকে কাজ করবেন</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workspace ADMIN</td>
+<td>নির্দিষ্ট প্রতিষ্ঠানের research, team, workspace preferences ও integrations; billing নয়</td>
+<td>সাধারণ sidebar-এর Team, Settings, Integrations ইত্যাদি</td>
+</tr>
+<tr>
+<td>Workspace OWNER</td>
+<td>নিজের workspace-এর billing-সহ সব workspace permission</td>
+<td>সাধারণ workspace UI</td>
+</tr>
+<tr>
+<td>Platform Administrator</td>
+<td>আলাদা <code>platformAdmin</code> অনুমতিসহ verified account; platform-level API access</td>
+<td>Sidebar → Administration; প্রয়োজনে অনুমোদিত admin API</td>
+</tr>
+<tr>
+<td>Deployment Operator</td>
+<td>Hosting, environment, Docker, database, worker, logs পরিচালনার infrastructure access</td>
+<td>Server/terminal ও deployment tooling</td>
+</tr>
+</tbody>
+</table>
+<p>Platform administrator হওয়া মাত্র সব customer workspace-এর research পড়ার membership পাওয়া যায় না। Customer research-এর সাধারণ endpoint-গুলো membership ও tenant policy মানে।</p>
+<p>Workspace admin-এর দৈনন্দিন কাজের জন্য <a href="BUSINESS_OWNER_MANUAL.html">ব্যবসার মালিকের নির্দেশিকা</a>-র role/team অংশ অনুসরণ করুন। <code>ADMIN</code> billing permission পান না এবং owner-এর মতো অন্য admin পরিচালনা করতে পারেন না।</p>
+<h2 id="admin_manual-section-3">২. Platform administrator হিসেবে প্রবেশ</h2>
+<p>১. নিজের account দিয়ে sign in করুন ও email verification শেষ করুন।</p>
+<p>২. অনুমোদিত deploy maintainer আপনার account-এর platform privilege provision করেছেন কি না নিশ্চিত করুন। বর্তমান register বা Team role selector দিয়ে নিজেকে platform admin করা যায় না। Default shared admin/password নেই।</p>
+<p>৩. Sidebar-এ <strong>Administration</strong> দেখালে খুলুন। সরাসরি স্থানীয় পথ: <code>http://localhost:3000/workspace/admin</code>।</p>
+<p>৪. <strong>Administration</strong>-এ Overview, Organizations, Users, Plans, Credit packs, Subscriptions, Jobs, Provider usage, Audit, Flags, Settings ও Diagnostics tab দেখুন। Record-গুলো সর্বশেষ সীমিত ফল; পুরো database export নয়।</p>
+<p>৫. নিচের form থেকে credit adjustment, plan/Stripe mapping, credit pack, feature flag, operational setting এবং platform role পরিবর্তন করুন। Job record-এর <strong>Request cancellation</strong> বা failed/cancelled run-এর <strong>Restart as new run</strong> ব্যবহার করুন; নতুন run নতুন credit reservation করে। Users record-এ <strong>Revoke sessions</strong> আছে। Privilege change-এ নিজের password/MFA লাগে এবং নিজের platform role বদলানো যায় না।</p>
+<p><code>Platform access is restricted</code> বা 403 এলে verified platform-admin permission যাচাই করুন। Workspace role বদলে সমস্যাটি সমাধান হবে না। প্রথম admin provisioning-এর জন্য অনুমোদিত operator backend থেকে <code>node --import tsx src/admin-cli.ts grant &lt;verified-email&gt;</code> চালাতে পারেন; compiled container-এ <code>node dist/admin-cli.js grant &lt;verified-email&gt;</code>। Revoke-এর জন্য <code>revoke</code> ব্যবহার করুন। এটি audit করে এবং শেষ admin revoke আটকায়। Shared default admin account নেই।</p>
+<h2 id="admin_manual-section-4">৩. Admin API-তে কী আছে</h2>
+<p>API reference স্থানীয়ভাবে <a href="http://localhost:4000/api/docs">http://localhost:4000/api/docs</a>-এ। নিচের endpoint-গুলোতে signed-in verified platform administrator প্রয়োজন।</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>কাজ</th>
+<th>UI-তে বর্তমান অবস্থা</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/admin/overview</code></td>
+<td>Organization/user count, run summary, research/monitor queue counts, recent audit</td>
+<td>Overview tab</td>
+</tr>
+<tr>
+<td><code>GET /api/admin/organizations</code></td>
+<td>সর্বোচ্চ ১০০ organization-এর পরিচয়, credit ও subscription summary</td>
+<td>Organizations tab</td>
+</tr>
+<tr>
+<td><code>POST /api/admin/organizations/{id}/credits</code></td>
+<td>Credit adjustment এবং immutable ledger/audit entry</td>
+<td>Credit adjustment form</td>
+</tr>
+<tr>
+<td><code>PATCH /api/admin/plans/{id}</code></td>
+<td>Database-backed plan field, trial days ও Stripe price ID</td>
+<td>Plan configuration form</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Provider usage</strong>-এ provider/model, token counts, duration ও configured rate থাকলে estimated cost পাওয়া যায়। Rate না থাকলে cost unavailable; token count দিয়ে আয় বা profit অনুমান করবেন না। <strong>Feature flags</strong> research, monitoring, copilot ও public sharing চালু/বন্ধ করে। <strong>Operational settings</strong>-এ announcement, support email এবং daily AI token cap সেট করা যায়। Telemetry exporter/DSN configured হলে বাইরের collector/Sentry-তে যাচাই করতে হবে।</p>
+<h3 id="admin_manual-section-5">সঠিক origin থেকে API ব্যবহার</h3>
+<p>অ্যাপের mutation-এ configured app origin ও JSON content type প্রয়োজন। স্থানীয় API docs-এর port <code>4000</code>, কিন্তু app origin <code>3000</code>; তাই Swagger page থেকে mutation চালালে Origin-এর কারণে 403 হতে পারে। Origin protection বন্ধ করবেন না।</p>
+<p>সাধারণ কাজ UI দিয়েই করুন। API-only admin operation-এর জন্য signed-in অবস্থায় app-এর <code>http://localhost:3000</code> tab-এ browser developer console খুলে নিচের মতো same-origin request ব্যবহার করা যায়। সব <code>{...}</code> placeholder আগে বাস্তব ID দিয়ে বদলাতে হবে। Account permission server-এ যাচাই হয়। কোনো cookie/token কপি করার প্রয়োজন নেই।</p>
+<p>শুধু overview পড়ার উদাহরণ:</p>
+<pre><code class="language-javascript">const response = await fetch('/api/admin/overview');
+const result = await response.json();
+console.log(response.status, result);
+</code></pre>
+<p>এই manual কোনো script paste করার মাধ্যমে admin privilege তৈরি করতে বলে না; অনুমোদিত account ছাড়া request প্রত্যাখ্যাত হবে।</p>
+<h2 id="admin_manual-section-6">৪. Credit adjustment</h2>
+<p><strong>ব্যবহার করুন:</strong> অনুমোদিত support correction বা commercial decision বাস্তবায়নে। Owner-এর সাধারণ research budget-এর জন্য platform credit adjustment প্রয়োজন নেই।</p>
+<p>১. <code>GET /api/admin/organizations</code> থেকে সঠিক organization-এর <strong>ID, name, credits ও reservedCredits</strong> মিলিয়ে নিন। একই রকম নাম হলে ID-ই চূড়ান্ত পরিচয়।</p>
+<p>২. Adjustment-এর reason ও কত unit যোগ/বিয়োগ হবে অনুমোদিত support record-এ লিখুন।</p>
+<p>৩. App tab-এর console থেকে একবার request পাঠান:</p>
+<pre><code class="language-javascript">const organizationId = 'REPLACE_WITH_ORGANIZATION_UUID';
+const response = await fetch(`/api/admin/organizations/${organizationId}/credits`, {
+  method: 'POST',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({
+    amount: 50,
+    reason: 'Approved correction for support case RS-EXAMPLE'
+  })
+});
+console.log(response.status, await response.json());
+</code></pre>
+<p>৪. সফল হলে organization balance এবং owner-এর <strong>Billing &amp; usage → Credit activity</strong>-তে <code>ADJUST</code> মিলিয়ে নিন।</p>
+<p><code>amount</code> শূন্য হতে পারে না; বর্তমান গ্রহণযোগ্য সীমা −১০০০০০ থেকে ১০০০০০। Negative adjustment মোট credit-কে reserved credit-এর নিচে নামাতে পারবে না। Reason অন্তত ১০ অক্ষর। প্রতিবার আলাদা request নতুন adjustment হতে পারে—response অস্পষ্ট হলে balance/ledger না দেখে আবার পাঠাবেন না। Ledger entry edit/delete করে correction করবেন না; আলাদা adjustment করুন।</p>
+<h2 id="admin_manual-section-7">৫. Plan পরিবর্তন ও Stripe mapping</h2>
+<p>Plan ID বর্তমানে <code>free</code>, <code>starter</code>, <code>pro</code>, <code>agency</code>, <code>enterprise</code>। Public <code>GET /api/billing/plans</code> enabled plan দেখায়।</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>অর্থ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>monthlyPriceCents / annualPriceCents</td>
+<td>UI-তে ব্যবহৃত price amount; বর্তমানে UI dollar চিহ্ন দেখায়</td>
+</tr>
+<tr>
+<td>monthlyCredits</td>
+<td>Plan-এর credit policy</td>
+</tr>
+<tr>
+<td>projectLimit / seatLimit / monitorLimit</td>
+<td>সংশ্লিষ্ট resource limit</td>
+</tr>
+<tr>
+<td>stripeMonthlyPriceId / stripeAnnualPriceId</td>
+<td>Stripe-এ আগে তৈরি করা সঠিক price ID</td>
+</tr>
+<tr>
+<td>enabled</td>
+<td>Plan listing-এর সক্রিয় অবস্থা</td>
+</tr>
+</tbody>
+</table>
+<p>১. ব্যবসার মালিকের কাছ থেকে price/limit/policy পরিবর্তন নিশ্চিত করুন।</p>
+<p>২. Stripe dashboard-এ সঠিক account, currency ও billing interval-এর product/price মিলিয়ে নিন। App থেকে Stripe product/price তৈরি হয় না।</p>
+<p>৩. বর্তমান plan listing সংরক্ষণ করে প্রয়োজনীয় field-ই update করুন:</p>
+<pre><code class="language-javascript">const response = await fetch('/api/admin/plans/starter', {
+  method: 'PATCH',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({ projectLimit: 10, seatLimit: 3, monitorLimit: 5 })
+});
+console.log(response.status, await response.json());
+</code></pre>
+<p>৪. Public plan listing ও customer <strong>Billing &amp; usage</strong>-এ ফল যাচাই করুন। Commercial price বদলালে Stripe mapping ও checkout-এর amount/interval আলাদাভাবে যাচাই করুন। Database display price বদলানো নিজে থেকে Stripe price বদলায় না।</p>
+<p>Plan update platform audit record রাখে; admin-এর owned workspace লাগবে না। সাধারণ seed বিদ্যমান field overwrite করে না। Monthly credit field বদলালেই existing organization-এ সঙ্গে সঙ্গে নতুন credit যোগ হয় না। Monitor limit কমলে সীমার বাইরে monitor execution বন্ধ হয়; আগের research data মুছে যায় না।</p>
+<h2 id="admin_manual-section-8">৬. Provider ও external service setup</h2>
+<p>Workspace owner/admin <strong>Integrations</strong>-এ setup status দেখতে পারেন। Provider secret সেই UI-তে লেখা বা দেখা যায় না; operator backend environment/secret store-এ দেন।</p>
+<table>
+<thead>
+<tr>
+<th>প্রয়োজন</th>
+<th>Server configuration</th>
+<th>কোথায় যাচাই করবেন</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gemini research</td>
+<td><code>AI_PROVIDER</code>, <code>GEMINI_API_KEY</code>, <code>GEMINI_MODEL</code></td>
+<td>Integrations; ছোট provider check; research error</td>
+</tr>
+<tr>
+<td>Automatic discovery</td>
+<td><code>TAVILY_API_KEY</code></td>
+<td>Integrations; discovery-enabled run</td>
+</tr>
+<tr>
+<td>Optional OpenAI adapter</td>
+<td><code>OPENAI_API_KEY</code>, <code>OPENAI_MODEL</code>; provider/fallback policy</td>
+<td>নির্দিষ্ট adapter test; token/model configuration</td>
+</tr>
+<tr>
+<td>Production email</td>
+<td><code>SMTP_URL</code>, <code>MAIL_FROM</code></td>
+<td>Outbox delivery, নিজের verification email</td>
+</tr>
+<tr>
+<td>Credential encryption</td>
+<td>৩২ random byte-এর hex <code>ENCRYPTION_KEY</code></td>
+<td>Startup/configuration ও encrypted credential workflow</td>
+</tr>
+<tr>
+<td>Stripe</td>
+<td><code>STRIPE_SECRET_KEY</code>, <code>STRIPE_WEBHOOK_SECRET</code>, plan price IDs</td>
+<td>Sandbox checkout, verified webhook, subscription ও ledger</td>
+</tr>
+</tbody>
+</table>
+<p>কোনো বাস্তব credential এই manual-এ অন্তর্ভুক্ত নেই। <code>.env</code> commit করবেন না এবং secret frontend-এর <code>NEXT_PUBLIC_*</code> variable-এ দেবেন না। Encryption key হারালে পুরোনো encrypted outbox/webhook secret খুলতে সমস্যা হবে; অনুমোদিত secret management-এ এটি সংরক্ষণ করুন। Key বদলালেই পুরোনো data re-encrypt হয় না।</p>
+<p>বর্তমান Gemini model configuration <code>gemini-3.5-flash-lite</code>; আগের live smoke check-এ structured output সফল হয়েছে। Provider availability/quota সময়ের সঙ্গে বদলাতে পারে। আবার পরীক্ষা দরকার হলে backend folder-এ <code>npm run check:provider</code> চালান; এটি একটি ছোট live request করে। <strong>Configured</strong> label-কে live health check বলবেন না।</p>
+<h2 id="admin_manual-section-9">৭. Billing সমস্যা সামলানো</h2>
+<p>Stripe webhook endpoint: <code>POST /api/billing/webhook</code>। এটি payment provider-এর signature দিয়ে যাচাই হয়; browser app-origin rule থেকে এর নির্দিষ্ট exemption আছে। Checkout success URL দেখে plan বা credit হাতে পরিবর্তন করবেন না।</p>
+<table>
+<thead>
+<tr>
+<th>সমস্যা</th>
+<th>যাচাই করুন</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Choose plan-এ setup error</td>
+<td>Stripe key, selected plan-এর monthly/annual price ID</td>
+</tr>
+<tr>
+<td>Checkout শেষ, status বদলায়নি</td>
+<td>Stripe event delivery, signature secret, customer/organization mapping</td>
+</tr>
+<tr>
+<td>Invoice paid, credit নেই</td>
+<td>Invoice type, subscription mapping, ledger-এর invoice reference, handler error</td>
+</tr>
+<tr>
+<td>Credit দুইবার grant হয়েছে সন্দেহ</td>
+<td>একই invoice-এর ledger reference; event ID ও invoice ID; repeated manual adjustment আছে কি না</td>
+</tr>
+<tr>
+<td>Portal খুলছে না</td>
+<td>ঐ organization-এর Stripe customer তৈরি আছে কি না; portal account configuration</td>
+</tr>
+</tbody>
+</table>
+<p>বর্তমানে signed webhook verification ও idempotent invoice grant automated test-এ যাচাই হয়েছে; Stripe transport সেখানে mocked। Live sandbox end-to-end subscription lifecycle verification এখনও বাকি। Automatic trial, add-on বা refund lifecycle সম্পূর্ণ হয়েছে বলে customer-কে জানাবেন না।</p>
+<h2 id="admin_manual-section-10">৮. Local service চালু ও অবস্থা দেখা</h2>
+<p><strong>শুধু স্থানীয় প্রস্তুত workspace-এর জন্য।</strong> Docker Desktop চালু করুন। Project root থেকে:</p>
+<pre><code class="language-powershell">powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1
+</code></pre>
+<p>Script backend build করে PostgreSQL/Redis/Mailpit এবং API/web/worker চালু করার চেষ্টা করে। এটি execution policy-র current script invocation-এর বিকল্প; প্রতিষ্ঠানের policy মেনে চালাবেন। <code>ExecutionPolicy Bypass</code> ব্যবহার করতে না চাইলে অনুমোদিত PowerShell execution policy-তে script চালান, অথবা repository README-র আলাদা terminal command ব্যবহার করুন।</p>
+<table>
+<thead>
+<tr>
+<th>সেবা</th>
+<th>স্থানীয় ঠিকানা/পথ</th>
+<th>সফলতার লক্ষণ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web</td>
+<td><code>http://localhost:3000</code></td>
+<td>Home/login/workspace render হয়</td>
+</tr>
+<tr>
+<td>API</td>
+<td><code>http://localhost:4000/api/health/ready</code></td>
+<td><code>status: ready</code></td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>loopback port 5433</td>
+<td><code>docker compose ps</code>-এ healthy</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>loopback port 6380</td>
+<td><code>docker compose ps</code>-এ healthy</td>
+</tr>
+<tr>
+<td>Mailpit</td>
+<td><code>http://localhost:8025</code></td>
+<td>Verification/reset/invitation email আসে</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>Background process</td>
+<td>Run queued থেকে এগোয়; outbox email যায়</td>
+</tr>
+<tr>
+<td>Logs</td>
+<td><code>artifacts/api.log</code>, <code>worker.log</code>, <code>web.log</code> এবং <code>*-error.log</code></td>
+<td>নতুন failure আছে কি না; আগে manually চালানো web-এর log <code>frontend.log</code>-এও থাকতে পারে</td>
+</tr>
+</tbody>
+</table>
+<p>Web খোলা যাচ্ছে বলেই worker চলছে বোঝায় না। API readiness বর্তমান implementation-এ database পরীক্ষা করে; Redis, worker বা সব provider-এর health প্রমাণ করে না।</p>
+<p>প্রাথমিক infra check:</p>
+<pre><code class="language-powershell">docker compose ps
+Invoke-RestMethod http://localhost:4000/api/health/ready
+</code></pre>
+<p>একই port-এ আগে অন্য process চললে start script listener reuse করতে পারে। অনুমান না করে process/service পরিচয় যাচাই করুন। Script current environment-এর migration/seed স্বয়ংক্রিয়ভাবে চালায় না; নতুন setup হলে repository README অনুযায়ী এগুলো আগে করুন।</p>
+<h2 id="admin_manual-section-11">৯. Research বা email আটকে গেলে</h2>
+<table>
+<thead>
+<tr>
+<th>লক্ষণ</th>
+<th>সম্ভাব্য জায়গা</th>
+<th>করণীয়</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>queued থেকে এগোয় না</td>
+<td>Worker/Redis/queue submission</td>
+<td>Worker process ও Redis দেখুন; durable queued run worker reconcile করতে পারে</td>
+</tr>
+<tr>
+<td>plan/analyze failed</td>
+<td>AI key/model/quota/schema</td>
+<td>Run/stage error দেখুন; configured model ও provider check মিলিয়ে নিন</td>
+</tr>
+<tr>
+<td>extract failed</td>
+<td>Public source/robots/DNS/content policy</td>
+<td>Canonical public URL দিন; access control বা private-network restriction বন্ধ করবেন না</td>
+</tr>
+<tr>
+<td>অনেকক্ষণ running</td>
+<td>Network timeout/stage budget/worker interruption</td>
+<td>Run-এর সময়, stage ও worker log মিলিয়ে দেখুন; customer-কে repeated new run দিতে বলবেন না</td>
+</tr>
+<tr>
+<td>Verification email আসে না</td>
+<td>Worker/SMTP/encryption/outbox retry</td>
+<td>Worker log ও local Mailpit/production mail delivery পরীক্ষা করুন; rate limit মেনে resend করুন</td>
+</tr>
+<tr>
+<td>Monitor enabled কিন্তু check নেই</td>
+<td>Subscription/credits/scheduler</td>
+<td>Plan/credit, worker ও monitoring scheduler দেখুন</td>
+</tr>
+</tbody>
+</table>
+<p>Research worker-এর নিজস্ব bounded attempts এবং BullMQ retry আছে। <strong>FAILED</strong> terminal run-কে queue-তে আবার দিলেই নতুনভাবে চলবে—এমন নয়; executor terminal run skip করে। কারণ ঠিক করার পর নতুন run শুরু করলে নতুন reservation হবে। User <strong>Cancel run</strong> দিয়ে চলমান কাজ থামানোর অনুরোধ করতে পারেন।</p>
+<p>এখন raw failed job recovery, queue cancellation management ও সব dead-letter-এর জন্য পূর্ণ admin UI নেই। Database row হাতে বদলে recovery শুরু করার আগে checkpoint, idempotency ও credit settlement-এর সঙ্গে মিল রেখে developer-reviewed procedure প্রয়োজন।</p>
+<h2 id="admin_manual-section-12">১০. Customer API key ও webhook সহায়তা</h2>
+<p>Workspace <strong>Integrations</strong>-এ API key একবার দেখানো হয়। হারালে পুরোনোটি উদ্ধার করা যায় না; নতুন key দিন ও পুরোনোটি revoke করুন। Account member remove করা আলাদা; organization-owned API key প্রয়োজন হলে আলাদা revoke করতে হবে। Key-এর scope, expiry ও tenant boundary server-এ যাচাই হয়। বর্তমান read-only public endpoints <code>/api/v1/projects</code> ও <code>/api/v1/reports</code>।</p>
+<p>Webhook management বর্তমানে API-only, workspace integration permission প্রয়োজন:</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>কাজ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /api/organizations/{orgId}/webhooks</code></td>
+<td>Endpoint ও সাম্প্রতিক delivery status</td>
+</tr>
+<tr>
+<td><code>POST /api/organizations/{orgId}/webhooks</code></td>
+<td>HTTPS receiver URL ও subscribed events দিয়ে endpoint তৈরি; signing secret একবার ফেরত দেয়</td>
+</tr>
+<tr>
+<td><code>DELETE /api/organizations/{orgId}/webhooks/{id}</code></td>
+<td>Endpoint disable</td>
+</tr>
+<tr>
+<td><code>POST /api/organizations/{orgId}/webhooks/{id}/retry/{deliveryId}</code></td>
+<td>Dead-letter delivery আবার pending করা</td>
+</tr>
+</tbody>
+</table>
+<p>বর্তমান events: <code>research.completed</code> ও <code>monitor.changed</code>। Delivery-তে event ID ও timestamped HMAC signature header থাকে। Receiver-কে signature যাচাই ও event ID দিয়ে duplicate handling করতে হবে। ব্যর্থ delivery-তে bounded backoff চলে; ৬ attempt শেষে <code>dead_letter</code> হতে পারে। Delivery/receiver problem না বুঝে বারবার manual retry করবেন না। Private-network receiver বা redirect দিয়ে restriction bypass করা যাবে না। Slack/Discord adapter এখনও নেই।</p>
+<h2 id="admin_manual-section-13">১১. দৈনন্দিন দায়িত্বের তালিকা</h2>
+<p>১. Web ও API readiness; database/cache health পরীক্ষা।</p>
+<p>২. Research/monitor queue-তে waiting, active ও failed count অস্বাভাবিক কি না দেখুন।</p>
+<p>৩. Email delivery ও pending/dead-letter webhook সমস্যা দেখুন।</p>
+<p>৪. Provider quota/model/setup এবং billing event error পরীক্ষা করুন।</p>
+<p>৫. Credit adjustment বা plan পরিবর্তনের কারণ ও audit record মিলিয়ে নিন।</p>
+<p>৬. Customer issue-তে organization ID ও run/project context নিশ্চিত করুন; প্রয়োজন ছাড়া private research সংগ্রহ করবেন না।</p>
+<p>৭. <code>docs/OPERATIONS.md</code>-এর backup/restore runbook অনুসরণ করুন। <code>npm run db:backup</code> dump ও checksum তৈরি করে; <code>npm run db:restore-check -- &lt;dump-path&gt;</code> আলাদা restore-check database-এ পরীক্ষা করে। স্থানীয় restore drill করা হয়েছে; production encrypted backup storage ও scheduled drill operator-কে configure করতে হবে।</p>
+<h2 id="admin_manual-section-14">১২. Production চালুর আগে অবশিষ্ট gate</h2>
+<p>Production Compose/Dockerfile আছে। Local image build/restore-এর evidence <code>docs/IMPLEMENTATION_STATUS.md</code>-এ রাখা হয়। বাস্তব hosting-এ launch করার আগে:</p>
+<ul>
+<li>HTTPS ingress, production secret management, বাস্তব SMTP, সঠিক origin ও database/cache networking।</li>
+<li>সর্বশেষ database migration/seed এবং production backup/restore drill।</li>
+<li>Google OAuth account/redirect URL দিয়ে real browser callback; Tavily দিয়ে discovery; SMTP দিয়ে বাস্তব inbox delivery।</li>
+<li>Stripe sandbox lifecycle ও price/credit policy acceptance।</li>
+<li>Redis-backed abuse protection, per-key metering এবং isolated security regression suite চালানো।</li>
+<li>Telemetry collector/Sentry-তে sanitized event পৌঁছানো, worker failure/recovery এবং deployed smoke check।</li>
+</ul>
+<p>বিস্তারিত সত্যতা যাচাইয়ের নথি: repository-এর <code>docs/IMPLEMENTATION_STATUS.md</code>। Audit ও credit ledger immutable; log ঢেকে বা ledger edit করে সমস্যা মেটানোর নির্দেশনা এই manual দেয় না।</p>
+<p><a href="index.html">সব নির্দেশিকায় ফিরে যান</a> · <a href="USER_MANUAL.html">সাধারণ ব্যবহারকারী</a> · <a href="BUSINESS_OWNER_MANUAL.html">ব্যবসার মালিক</a></p>
+</main><footer class="footer">বর্তমান implementation-এর ভিত্তিতে তৈরি। বাস্তব API key বা password এই নথিতে নেই।</footer></body></html>

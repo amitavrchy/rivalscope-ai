@@ -1,0 +1,6 @@
+[submodule "rivalscope-backend"]
+	path = rivalscope-backend
+	url = https://github.com/amitavrchy/rivalscope-backend.git
+[submodule "rivalscope-frontend"]
+	path = rivalscope-frontend
+	url = https://github.com/amitavrchy/rivalscope-frontend.git

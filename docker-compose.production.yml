@@ -1,0 +1,60 @@
+name: rivalscope-production
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rivalscope
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a strong POSTGRES_PASSWORD}
+      POSTGRES_DB: rivalscope
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rivalscope"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    volumes: ["redis_data:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  migrate:
+    build: ./rivalscope-backend
+    env_file: ./rivalscope-backend/.env.production
+    command: ["node", "scripts/migrate.mjs"]
+    depends_on:
+      postgres: { condition: service_healthy }
+  api:
+    build: ./rivalscope-backend
+    restart: unless-stopped
+    env_file: ./rivalscope-backend/.env.production
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+  worker:
+    build: ./rivalscope-backend
+    restart: unless-stopped
+    env_file: ./rivalscope-backend/.env.production
+    command: ["node", "dist/worker.js"]
+    healthcheck: { disable: true }
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    stop_grace_period: 16m
+  web:
+    build: ./rivalscope-frontend
+    restart: unless-stopped
+  proxy:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    ports: ["127.0.0.1:8080:8080"]
+    volumes: ["./deployment/nginx.conf:/etc/nginx/nginx.conf:ro"]
+    depends_on: [api, web]
+volumes:
+  postgres_data:
+  redis_data:
