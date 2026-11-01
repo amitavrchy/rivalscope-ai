@@ -2,9 +2,9 @@
   "name": "rivalscope",
   "private": true,
   "scripts": {
-    "dev:web": "npm --prefix rivalscope-frontend run dev",
-    "dev:api": "npm --prefix rivalscope-backend run start:dev",
-    "dev:worker": "npm --prefix rivalscope-backend run worker:dev",
+    "dev:web": "node init && npm --prefix rivalscope-frontend run dev",
+    "dev:api": "node init && npm --prefix rivalscope-backend run start:dev",
+    "dev:worker": "node init && npm --prefix rivalscope-backend run worker:dev",
     "infra": "docker compose up -d --wait",
     "db:generate": "npm --prefix rivalscope-backend run db:generate",
     "db:migrate": "npm --prefix rivalscope-backend run db:migrate",

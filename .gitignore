@@ -4,11 +4,10 @@
 **/coverage/
 **/.venv/
 **/__pycache__/
-**/.env
-**/.env.*
 !**/.env.example
 **/*.tsbuildinfo
 *.log
 artifacts/
 backups/
 **/generated/
+config.bat
