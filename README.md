@@ -1,70 +1,108 @@
 # RivalScope AI
 
-Next.js frontend, NestJS API and BullMQ worker with PostgreSQL/pgvector and Redis. See [implementation status](docs/IMPLEMENTATION_STATUS.md) for feature coverage, verification and external service activation requirements.
+[Web app](https://rivalscope-132.netlify.app) · [API](https://rivalscope-api.onrender.com)
 
-This is the shared workspace repository. The API and web application are independent Git submodules; the retained Python tooling lives in `rivalscope-ai/`. AI research currently executes in the NestJS worker.
+Evidence-backed competitive intelligence for teams that research public sources, compare competitors, and watch the market from one workspace.
 
-```bash
-git clone --recurse-submodules https://github.com/amitavrchy/rivalscope-ai.git rivalscope
-cd rivalscope
+## Overview
+
+RivalScope turns public competitor information into source-backed findings. This repository is the workspace for that product. The web application and the API live in Git submodules, `rivalscope-frontend` and `rivalscope-backend`, which are the repositories behind the deployments above. A retained Python project in `rivalscope-ai` supports browser checks and the Bengali manuals. It does not run a second API. Research executes in the NestJS worker.
+
+The browser talks only to the Next.js app. A same-origin `/api` rewrite, aimed at `API_INTERNAL_URL`, forwards to the NestJS API. Sessions are HttpOnly cookies. Provider credentials stay in the API environment. PostgreSQL is the system of record, with pgvector for copilot retrieval. Redis and BullMQ run background research, schedules, and rate limits.
+
+## Key features
+
+- Accounts with Argon2id passwords, email verification, hashed expiring sessions, TOTP multi-factor authentication, recovery codes, and optional Google sign-in.
+- Workspaces with six roles (owner, admin, analyst, editor, viewer, billing manager), invitations, and project collaboration.
+- Research runs with seven bounded stages: plan, search, extract, analyze, catalog, verify, and report. Citations must match text fetched for that run.
+- Competitor catalogs, published pricing, SWOT records, and comparison matrices that leave missing evidence unknown.
+- Website monitoring, literal phrase watch rules, and email, Slack, or Discord notifications.
+- A project copilot that retrieves saved research with pgvector embeddings, with a lexical fallback.
+- PDF and DOCX reports, plus expiring shared links.
+- Stripe checkout, credit balances, scoped customer API keys, and signed webhooks.
+- Platform administration, usage history, and account or workspace export and deletion.
+
+## Tech stack
+
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![NestJS](https://img.shields.io/badge/NestJS-12-E0234E?logo=nestjs&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17%20%2B%20pgvector-4169E1?logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7%20%2B%20BullMQ-DC382D?logo=redis&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)
+
+| Layer | Stack |
+| --- | --- |
+| Web | Next.js 16 App Router, React 19, TanStack Query, Tailwind CSS 4, Zod |
+| API | NestJS 12, Prisma 7, BullMQ, Zod, OpenAPI |
+| Data | PostgreSQL 17 with pgvector, Redis 7 |
+| AI and search | Gemini by default (`AI_PROVIDER`), optional OpenAI, optional Tavily discovery |
+| Billing and mail | Stripe, SMTP via `SMTP_URL` |
+
+## Project structure
+
+```
+rivalscope-frontend/          Next.js web app (submodule)
+rivalscope-backend/           NestJS API, worker, and Prisma schema (submodule)
+rivalscope-ai/                Python tooling for checks and manuals
+docs/manuals/bn/              Bengali user, owner, and admin manuals
+deployment/nginx.conf         Reverse proxy for the container stack
+docker-compose.yml            Local Postgres, Redis, and Mailpit
+docker-compose.production.yml API, worker, web, database, and proxy
+scripts/                      Workspace checks and the local start helper
+package.json                  dev, database, and check scripts
 ```
 
-## বাংলা ব্যবহার নির্দেশিকা
+## Getting started
 
-[নির্দেশিকার সূচি](docs/manuals/bn/README.md) · [সাধারণ ব্যবহারকারী](docs/manuals/bn/USER_MANUAL.md) · [ব্যবসার মালিক](docs/manuals/bn/BUSINESS_OWNER_MANUAL.md) · [অ্যাডমিন](docs/manuals/bn/ADMIN_MANUAL.md)
+Use Node.js 24. Docker is required for PostgreSQL (pgvector) and Redis.
 
-Browser/print সংস্করণের জন্য [সম্পূর্ণ বাংলা manual](docs/manuals/bn/RIVALSCOPE_MANUAL_BN.html) খুলুন। সরাসরি পড়া বা শেয়ার করার জন্য [বাংলা PDF](docs/manuals/bn/RIVALSCOPE_MANUAL_BN.pdf) আছে।
-
-## Local development (Windows / PowerShell)
-
-Node 24 and Docker Desktop are required. Existing npm lockfiles are retained.
-
-```powershell
+```bash
+git clone --recurse-submodules https://github.com/amitavrchy/rivalscope-ai.git
+cd rivalscope-ai
 docker compose up -d --wait
+```
+
+Copy `rivalscope-backend/.env.example` to `rivalscope-backend/.env`, and `rivalscope-frontend/.env.example` to `rivalscope-frontend/.env`.
+
+On the API, set `DATABASE_URL`, `REDIS_URL`, and `ENCRYPTION_KEY` (32 random bytes as hex). Set `APP_ORIGIN` to the web origin; production requires `https`. `PORT` is the API listen port. Account mail needs `SMTP_URL` and `MAIL_FROM`. Optional integrations use `GEMINI_API_KEY`, `OPENAI_API_KEY`, `AI_FALLBACK_PROVIDER`, `TAVILY_API_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `GOOGLE_OAUTH_CLIENT_ID`, and `GOOGLE_OAUTH_CLIENT_SECRET`.
+
+On the web app, set `API_INTERNAL_URL` to the API origin. Do not put provider secrets in frontend variables.
+
+```bash
 npm --prefix rivalscope-backend ci
 npm --prefix rivalscope-frontend ci
-# Copy .env.example to .env only when no local environment already exists.
-# Configure a random 32-byte hex ENCRYPTION_KEY and server provider credentials.
 npm run db:generate
 npm run db:migrate
 npm run db:seed
 ```
 
-Run these in three terminals:
+Run the API, worker, and web app in separate terminals:
 
-```powershell
+```bash
 npm run dev:api
 npm run dev:worker
 npm run dev:web
 ```
 
-For this prepared workspace, `powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1` builds the API and starts all three applications in the background with logs under ignored `artifacts/`. It reuses existing listeners on ports 3000/4000 and an existing registered worker process. Start Docker Desktop first.
+OpenAPI is served at `/api/docs`. Readiness is `GET /api/health/ready`.
 
-- App: http://localhost:3000
-- API docs: http://localhost:4000/api/docs
-- Readiness: http://localhost:4000/api/health/ready
-- Verification/password-reset email inbox: http://localhost:8025
+`docker-compose.production.yml` builds the API, worker, and web images, runs migrations, and places Nginx (`deployment/nginx.conf`) in front. Production secrets belong in `rivalscope-backend/.env.production`, including `APP_ORIGIN`, `DATABASE_URL`, `REDIS_URL`, `ENCRYPTION_KEY`, `SMTP_URL`, and provider keys. `BILLING_PROVIDER=mock` is rejected when `NODE_ENV` is production.
 
-Register, open the local inbox, verify your email and create a project. Research works from known public source URLs with discovery disabled. Automatic discovery requires `TAVILY_API_KEY`. Checkout requires Stripe keys, a webhook secret and database-backed plan price IDs. Provider credentials must never appear in frontend or `NEXT_PUBLIC_*` environment variables.
+Check each app:
 
-On Windows networks requiring the OS certificate store, use Node's `--use-system-ca` or set `NODE_USE_SYSTEM_CA=1` before launching Node. Keep TLS certificate verification enabled.
-
-## Checks
-
-Unit tests use deterministic fixtures and do not call live providers. Integration tests require a separate `rivalscope_test` database and Redis database 1:
-
-```powershell
-docker compose exec postgres createdb -U rivalscope rivalscope_test
-$env:DATABASE_URL='postgresql://rivalscope:rivalscope_local@localhost:5433/rivalscope_test'
-npm run db:migrate
-npm run db:seed
-npm run check
+```bash
+npm --prefix rivalscope-backend run typecheck
+npm --prefix rivalscope-backend run lint
+npm --prefix rivalscope-backend run build
+npm --prefix rivalscope-frontend run lint
+npm --prefix rivalscope-frontend run build
 ```
 
-Use `TEST_DATABASE_URL` and `TEST_REDIS_URL` to override integration infrastructure. Integration tests append uniquely named test records to the dedicated test database; they never truncate user data. `scripts/smoke-preview.py` uses the retained Python Playwright environment and installed Edge to verify the running local UI. It creates a clearly labeled preview workspace, verifies real local email delivery and saves ignored desktop/mobile screenshots. `npm --prefix rivalscope-backend run check:provider` makes a small live Gemini request and prints no secret.
+`npm run check` runs those steps plus the backend unit and integration tests. Point integration tests at an isolated database with `DATABASE_URL` or `TEST_DATABASE_URL`, and `REDIS_URL` or `TEST_REDIS_URL`.
 
-## Deployment
+## Author
 
-`docker-compose.production.yml`, app Dockerfiles and `deployment/nginx.conf` define the container topology. Production requires `rivalscope-backend/.env.production` with container database/Redis hostnames, a strong database password, HTTPS `APP_ORIGIN`, SMTP, encryption and provider secrets. Bind the loopback reverse proxy behind your TLS ingress. Migrations/plan seeding precede API and worker startup. API and web image builds have succeeded locally; rebuild for the published commits and verify the deployed stack before launch. No production deployment or live payment acceptance has been performed.
-
-No external service is silently replaced with mock data. S3-compatible storage is an optional Compose profile and is not yet used by report exports. The Python dependency environment is retained but is not a running service.
+Amitav Roy Chowdhury — [github.com/amitavrchy](https://github.com/amitavrchy)
